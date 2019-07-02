@@ -4,18 +4,18 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :picture %>
     <%= f.input :make %>
     <%= f.input :model %>
     <%= f.input :year %>
     <%= f.input :km %>
     <%= f.input :price %>
-    <%= f.input :color %>
-    <%= f.input :registration %>
+    <%= f.input :color, collection: ["red","blue","grey","black","white","yellow","silver", "other"] %>
+    <%= f.input :registration, start_year: Date.today.year - 1, end_year: Date.today.year + 1, label: "Registration expiry date"  %>
     <%= f.input :description %>
-    <%= f.input :fuel_type %>
-    <%= f.input :transmission_type %>
+    <%= f.input :fuel_type , collection: ["Petrol", "Diesel", "Hybrid"]%>
+    <%= f.input :transmission_type, collection: ["Automatic", "Manual"] %>
     <%= f.input :location %>
+    <%= f.file_field :pictures, multiple: true %>
   </div>
 
   <div class="form-actions">
