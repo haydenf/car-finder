@@ -25,10 +25,16 @@ class ProfilesController < ApplicationController
   # POST /profiles.json
   def create
     @profile = Profile.new(profile_params)
+    # puts "--------- create method-------"
+    # puts profile_params
+    
+    # connect user_id to the profile table
+    @profile.user_id = current_user.id
 
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
+        # after creating a profile user must be automatically redirect to listing a new car
+        format.html { redirect_to new_car_path, notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
       else
         format.html { render :new }

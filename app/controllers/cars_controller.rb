@@ -37,6 +37,14 @@ class CarsController < ApplicationController
   # POST /cars.json
   def create
     @car = Car.new(car_params)
+    
+    # populate sellers table
+    @seller = Seller.new
+    @seller.profile_id = current_user.profile.id
+    @seller.save
+
+    # link the seller_id to the car model
+    @car.seller_id = current_user.profile.seller.id
 
     respond_to do |format|
       if @car.save
@@ -81,6 +89,7 @@ class CarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
-      params.require(:car).permit(:picture, :make, :model, :year, :km, :price, :color, :registration, :description, :fuel_type, :transmission_type, :location)
+      # link pictures to the cars controller
+      params.require(:car).permit( :make, :model, :year, :km, :price, :color, :registration, :description, :fuel_type, :transmission_type, :location, pictures: [])
     end
 end
