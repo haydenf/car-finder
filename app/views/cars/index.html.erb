@@ -24,7 +24,7 @@
   <tbody>
     <% @cars.each do |car| %>
       <tr>
-        <td><%= car.picture %></td>
+        <td><%= car.pictures.first %></td>
         <td><%= car.make %></td>
         <td><%= car.model %></td>
         <td><%= car.year %></td>

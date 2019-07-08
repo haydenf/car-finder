@@ -8,15 +8,18 @@
 <h1> CAR FINDER </h1>
 <% @cars.each do |car|%>
     <div class="card" >
-        <%= image_tag car.pictures.first%>
+        <% if car.pictures.first %>
+            <%= image_tag car.pictures.first%>
+        <% end %>
         <div class="card-body">
             <p class="card-text">
             <%= car.model%> <%= car.make%>
             </p>
             <p>
             $<%= car.price%>
+             <%= link_to 'Explore', car_path(car.id), class:"btn btn-primary" %>
+
             </p>
         </div>
     </div>
 <% end %>
-

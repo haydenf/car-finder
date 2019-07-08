@@ -14,20 +14,28 @@ class CarsController < ApplicationController
 
   # GET /cars/new
   def new
-    @car = Car.new
-    # if the user is not logged in redirect to the login page
-    # else redirect to the cars form page
-    if user_signed_in?
-      # if the user has create a profile show the cars form else redirect to creating a profile page
-       if current_user.profile
-        # render cars form page
-       else
-         redirect_to new_profile_path
-       end
+    if current_user
+      if current_user.profile
+          @car = Car.new
+      else 
+        redirect_to new_profile_path
+      end
     else
-        redirect_to new_user_session_path
+      redirect_to new_user_session_path 
     end
   end
+    # # if the user is not logged in redirect to login page, else redirect to the cars form page
+    # if user_signed_in?
+    #   # if the user has created a profile show the cars form else redirect to create profile page
+    #   if current_user.profile
+    #     #renders car form
+    #   else 
+    #     redirect_to new_profile_path
+    #   end
+    # else
+    #   redirect_to new_user_session_path
+    # end
+
 
   # GET /cars/1/edit
   def edit
@@ -36,16 +44,20 @@ class CarsController < ApplicationController
   # POST /cars
   # POST /cars.json
   def create
+    puts "---create savdsabd -----"
     @car = Car.new(car_params)
-    
-    # populate sellers table
+    puts "---create -----"
+    puts car_params
+
+    #populating se,llers table
     @seller = Seller.new
     @seller.profile_id = current_user.profile.id
     @seller.save
 
-    # link the seller_id to the car model
+    #link seller to car model
+  
     @car.seller_id = current_user.profile.seller.id
-
+    
     respond_to do |format|
       if @car.save
         format.html { redirect_to @car, notice: 'Car was successfully created.' }
@@ -91,5 +103,6 @@ class CarsController < ApplicationController
     def car_params
       # link pictures to the cars controller
       params.require(:car).permit( :make, :model, :year, :km, :price, :color, :registration, :description, :fuel_type, :transmission_type, :location, pictures: [])
-    end
+
+    end 
 end

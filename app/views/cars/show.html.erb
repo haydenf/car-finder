@@ -1,10 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Picture:</strong>
-  <%= image_tag @car.pictures.first %>
-</p>
-
+<div class="row">
+<div class="col-md-8">
+<%
+=begin%>
+ <% @cars.pictures.each do |picture|  %>
+<%= image_tag picture, class: "d-block w-100" %>
+<% end %> 
+<%
+=end%>
+</div>
+<div class="col-md-4">
+<%
+=begin%>
+ container for car content 
+<%
+=end%>
 <p>
   <strong>Make:</strong>
   <%= @car.make %>
@@ -59,6 +70,15 @@
   <strong>Location:</strong>
   <%= @car.location %>
 </p>
+</div>
+</div>
+
+<p>
+  <strong>Picture:</strong>
+  <%= image_tag @car.pictures.first if @car.pictures.first %>
+</p>
+
+
 
 <%= link_to 'Edit', edit_car_path(@car) %> |
 <%= link_to 'Back', cars_path %>

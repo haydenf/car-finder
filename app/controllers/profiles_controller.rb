@@ -15,6 +15,8 @@ class ProfilesController < ApplicationController
   # GET /profiles/new
   def new
     @profile = Profile.new
+    #capture the user type passed in the route
+    @user_type = params[:user_type]
   end
 
   # GET /profiles/1/edit
@@ -25,17 +27,25 @@ class ProfilesController < ApplicationController
   # POST /profiles.json
   def create
     @profile = Profile.new(profile_params)
-    # puts "--------- create method-------"
-    # puts profile_params
-    
-    # connect user_id to the profile table
-    @profile.user_id = current_user.id
 
+    # connect userid to the profile table
+    @profile.user_id = current_user.id
     respond_to do |format|
       if @profile.save
-        # after creating a profile user must be automatically redirect to listing a new car
-        format.html { redirect_to new_car_path, notice: 'Profile was successfully created.' }
-        format.json { render :show, status: :created, location: @profile }
+
+        if params[:profile][:user_type] == "buyer"
+
+          @buyer = Buyer.new
+          @buyer.profile_id = current_user.profile.id
+          @buyer.save
+          #after creating a profile userm ust be automatically redirected to listing a new car
+          
+          format.html { redirect_to root_path, notice: 'Profile was successfully created.' }
+          format.json { render :show, status: :created, location: @profile }
+        else
+          format.html { redirect_to new_car_path, notice: 'Profile was successfully created.' }
+          format.json { render :show, status: :created, location: @profile }
+        end
       else
         format.html { render :new }
         format.json { render json: @profile.errors, status: :unprocessable_entity }
@@ -75,6 +85,6 @@ class ProfilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def profile_params
-      params.require(:profile).permit(:first_name, :last_name, :user_name, :phone_number, :address, :user_id)
+      params.require(:profile).permit(:first_name, :last_name, :user_name, :phone_number, :adress, :user_id)
     end
 end
