@@ -1,84 +1,91 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
-<div class="col-md-8">
-<%
-=begin%>
- <% @cars.pictures.each do |picture|  %>
-<%= image_tag picture, class: "d-block w-100" %>
-<% end %> 
-<%
-=end%>
-</div>
-<div class="col-md-4">
-<%
-=begin%>
- container for car content 
-<%
-=end%>
-<p>
-  <strong>Make:</strong>
-  <%= @car.make %>
-</p>
+  <div class="col-md-8">
+    <%# container for images %>
+    <div class="row">
+      <% @car.pictures.each do |picture|%>
+        <div class="col-md-6">
+          <%= image_tag picture, class: "d-block w-100"%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <%# container for car content %>
+    <p>
+      <strong>Make:</strong>
+      <%= @car.make %>
+    </p>
+    <p>
+      <strong>Model:</strong>
+      <%= @car.model %>
+    </p>
 
-<p>
-  <strong>Model:</strong>
-  <%= @car.model %>
-</p>
+    <p>
+      <strong>Year:</strong>
+      <%= @car.year %>
+    </p>
 
-<p>
-  <strong>Year:</strong>
-  <%= @car.year %>
-</p>
+    <p>
+      <strong>Km:</strong>
+      <%= @car.km %>
+    </p>
 
-<p>
-  <strong>Km:</strong>
-  <%= @car.km %>
-</p>
+    <p>
+      <strong>Price:</strong>
+      <%= @car.price %>
+    </p>
 
-<p>
-  <strong>Price:</strong>
-  <%= @car.price %>
-</p>
+    <p>
+      <strong>Color:</strong>
+      <%= @car.color %>
+    </p>
 
-<p>
-  <strong>Color:</strong>
-  <%= @car.color %>
-</p>
+    <p>
+      <strong>Registration:</strong>
+      <%= @car.registration %>
+    </p>
 
-<p>
-  <strong>Registration:</strong>
-  <%= @car.registration %>
-</p>
+    <p>
+      <strong>Description:</strong>
+      <%= @car.description %>
+    </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @car.description %>
-</p>
+    <p>
+      <strong>Fuel type:</strong>
+      <%= @car.fuel_type %>
+    </p>
 
-<p>
-  <strong>Fuel type:</strong>
-  <%= @car.fuel_type %>
-</p>
+    <p>
+      <strong>Transmission type:</strong>
+      <%= @car.transmission_type %>
+    </p>
 
-<p>
-  <strong>Transmission type:</strong>
-  <%= @car.transmission_type %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @car.location %>
-</p>
-</div>
+    <p>
+      <strong>Location:</strong>
+      <%= @car.location %>
+    </p>
+    
+  </div>
 </div>
 
-<p>
-  <strong>Picture:</strong>
-  <%= image_tag @car.pictures.first if @car.pictures.first %>
-</p>
+<%#if the car currently being listed is by the seller who has logged in show the edit button %>
+<% if (current_user && current_user.profile && (current_user.profile.id == @car.seller.profile_id))%>
 
 
-
-<%= link_to 'Edit', edit_car_path(@car) %> |
+<%#if the car has a buyer provide a sold button else show a buy button %>
+<%= link_to 'Edit', edit_car_path(@car) %> 
+  <% else %>
+    <% if @car.buyer %>
+      <button  class="btn btn-danger"> Sold </button>
+      <%# Add review button %>
+      <%= link_to 'Review the seller', profile_path(@car.seller.profile_id), class: "btn btn-warning"%>
+<% else %>
+<%# show the buy option %>
+  <% if current_user && current_user.profile  && current_user.profile.buyer%>
+    <%= link_to 'buy', buyer_page_path(car_id: @car.id, seller_id: @car.seller_id), class: "btn btn-primary"%>
+    <% end %>
+  <% end %>
+<% end %>
 <%= link_to 'Back', cars_path %>

@@ -4,22 +4,23 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </div>
-
-<h1> CAR FINDER </h1>
-<% @cars.each do |car|%>
-    <div class="card" >
-        <% if car.pictures.first %>
-            <%= image_tag car.pictures.first%>
-        <% end %>
-        <div class="card-body">
-            <p class="card-text">
-            <%= car.model%> <%= car.make%>
-            </p>
-            <p>
-            $<%= car.price%>
-             <%= link_to 'Explore', car_path(car.id), class:"btn btn-primary" %>
-
-            </p>
+<div class="row mt-5">
+    <% @cars.each do |car|%>
+    <div class="col-md-4 mt-5">
+        <div class="card" >
+           <% if car.pictures.first %>
+             <%= image_tag car.pictures.first, class: "card-img-top" %>
+            <% end %>
+            <div class="card-body">
+                <p class="card-text">
+                <%= car.model%> <%= car.make%>
+                </p>
+                <p>
+                $<%= car.price%>
+                </p>
+                <%= link_to 'Explore', car_path(car.id), class: "btn btn-primary"%>
+            </div>
         </div>
     </div>
-<% end %>
+    <% end %>
+</div>

@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
+<div class="row">
 
+<div class="col-md-6">
 <p>
   <strong>First name:</strong>
   <%= @profile.first_name %>
@@ -30,5 +32,39 @@
   <%= @profile.user.email %>
 </p>
 
+
 <%= link_to 'Edit', edit_profile_path(@profile) %> |
 <%= link_to 'Back', profiles_path %>
+</div>
+
+<%# Review form and list all the review for this seller %>
+<div class="col-md-6">
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Leave Review</h5>
+    <p class="card-body">
+    <%= form_for([@profile.seller, Review.new], remote: true) do |f| %>
+      <%= f.text_field :comment %>
+       <%= f.submit "Add Review", class: 'btn btn-primary mt-3'  %>
+          <% end %>
+    </p>
+
+  </div>
+</div>
+
+</div>
+</div>
+
+
+<% @profile.seller.reviews.each do |review| %>
+<blockquote class="blockquote">
+  <p class="mb-0"> <%= review.comment %> </p>
+  <footer class="blockquote-footer">Someone famous in <cite title="Source Title"> <%= review.buyer.profile.first_name %> </cite></footer>
+</blockquote>
+
+<%
+=begin%>
+ <h5> Posted by <%= review.buyer.profile.first_name %> </h5> 
+<%
+=end%>
+<% end %>

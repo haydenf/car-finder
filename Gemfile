@@ -44,6 +44,7 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'devise'
 gem 'simple_form'
+gem 'aws-sdk-rails', '~> 2'
 gem 'aws-sdk-s3'
 
 group :development, :test do

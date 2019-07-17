@@ -1,7 +1,12 @@
 @import "bootstrap";
+@import "cars";
 
 .btn-primary {
     color: #fff;
     background-color: #64b767;
     border-color:  #64b767;
+}
+
+.card-img-top{
+    height: 250px;
 }

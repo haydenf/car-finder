@@ -59,9 +59,15 @@ GEM
     aws-sdk-kms (1.23.0)
       aws-sdk-core (~> 3, >= 3.58.0)
       aws-sigv4 (~> 1.1)
+    aws-sdk-rails (2.1.0)
+      aws-sdk-ses (~> 1)
+      railties (>= 3)
     aws-sdk-s3 (1.44.0)
       aws-sdk-core (~> 3, >= 3.58.0)
       aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-ses (1.24.0)
+      aws-sdk-core (~> 3, >= 3.58.0)
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.1.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
@@ -252,6 +258,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-rails (~> 2)
   aws-sdk-s3
   better_errors
   binding_of_caller

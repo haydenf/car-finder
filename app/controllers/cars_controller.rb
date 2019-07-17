@@ -7,9 +7,8 @@ class CarsController < ApplicationController
     @cars = Car.all
   end
 
-  # GET /cars/1
-  # GET /cars/1.json
   def show
+
   end
 
   # GET /cars/new
@@ -39,6 +38,8 @@ class CarsController < ApplicationController
 
   # GET /cars/1/edit
   def edit
+ 
+
   end
 
   # POST /cars
@@ -47,7 +48,7 @@ class CarsController < ApplicationController
     puts "---create savdsabd -----"
     @car = Car.new(car_params)
     puts "---create -----"
-    puts car_params
+    puts params
 
     #populating se,llers table
     @seller = Seller.new
@@ -72,6 +73,9 @@ class CarsController < ApplicationController
   # PATCH/PUT /cars/1
   # PATCH/PUT /cars/1.json
   def update
+    if @car.pictures
+    @car.pictures.purge
+    end
     respond_to do |format|
       if @car.update(car_params)
         format.html { redirect_to @car, notice: 'Car was successfully updated.' }
@@ -101,6 +105,8 @@ class CarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
+
+    puts "-----cars_params message------"
       # link pictures to the cars controller
       params.require(:car).permit( :make, :model, :year, :km, :price, :color, :registration, :description, :fuel_type, :transmission_type, :location, pictures: [])
 
